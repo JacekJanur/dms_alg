@@ -140,8 +140,8 @@ class _MainScreenState extends State<MainScreen> {
             Column(children: [Text('')]),
             for (int i = 1; i <= jobsNumber; i++) ...[
               Container(
-                  color: colorsList[i],
-                  child: Column(children: [Text('Z ${i}')])),
+                  color: colorsList[i-1],
+                  child: Column(children: [Text('Z ${i-1}')])),
             ]
           ],
         ),
