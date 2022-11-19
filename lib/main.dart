@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dms_alg/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: MyCustomScrollBehavior(),
       title: 'DMS algorytm',
       home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
@@ -32,4 +35,15 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainScreen();
   }
+}
+
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    // etc.
+  };
 }

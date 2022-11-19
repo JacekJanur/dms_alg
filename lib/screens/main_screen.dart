@@ -16,6 +16,7 @@ class _MainScreenState extends State<MainScreen> {
   int jobsNumber = 4;
   int maxTime = 10;
   int minTime = 0;
+  bool calculated = false;
   List<int> indexesTime = [
     1,
     2,
@@ -38,6 +39,8 @@ class _MainScreenState extends State<MainScreen> {
     19,
     20
   ];
+
+  List<Map<String, dynamic>> scheduledJobs = [];
 
   List<Map<String, int>> jobs = [
     {
@@ -75,35 +78,52 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           _PropertiesInputs(),
           _JobsInfoTable(),
-          _JobsTimeTable(),
+          if(calculated ) _JobsTimeTable(),
         ],
       ),
     );
   }
 
-  Table _JobsTimeTable() {
-    return Table(
-      children: [
-        TableRow(
-          children: [
-            Column(children: [Text('s')]),
-            for (var i in indexesTime) Column(children: [Text(i.toString())]),
-          ],
-        ),
-        TableRow(
-          children: [
-            TableCell(child: Text('Z')),
-            for (var i in indexesTime)
-              TableCell(
-                child: Container(
-                  child: Text(''),
-                  color: i % 2 == 0 ? Colors.red : Colors.orange,
+  Widget _JobsTimeTable() {
+    return scheduledJobs != [] ? Expanded(
+        child: SingleChildScrollView(
+          child: Container(
+            height: 200,
+            width: double.maxFinite,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                Table(
+                  defaultColumnWidth: FixedColumnWidth(60.0),
+                  children: [
+                    TableRow(
+                      children: [
+                        Column(children: [Text('s')]),
+                        for (var i = 1; i <= scheduledJobs.length; i++) Column(children: [Text(i.toString())]),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        TableCell(child: Text('Z', textAlign: TextAlign.center,)),
+                        for (var i = 0; i < scheduledJobs.length; i++)
+                          TableCell(
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(scheduledJobs[i]['id'].toString()),
+                              color: i % 2 == 0 ? Colors.grey.shade200 : Colors.grey.shade400,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-          ],
+              ],
+            ),
+          ),
         ),
-      ],
-    );
+    ):
+        const Center(child: Text("test"),);
+
   }
 
   Table _JobsInfoTable() {
@@ -288,7 +308,11 @@ class _MainScreenState extends State<MainScreen> {
             },
             child: Text("Losuj zadnia")),
         OutlinedButton(onPressed: () {
-          print(dms(jobs));
+          setState(() {
+            calculated = true;
+            dynamic test = jobs;
+            scheduledJobs = dms(test);
+          });
         }, child: Text("Start"))
       ],
     );
