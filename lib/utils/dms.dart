@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-
-// Coś jest nie tak z tymi pętlami tamm...
-
 List<Map<String, int>> dms(List<Map<String, int>> x){
   List<Map<String, int>> jobs = x.toList();
   List<Map<String, int>> kolejnosc = [];
-  int lcm = getLcm(jobs);
+  int lcm = 1000;
 
   List<int> listP = [];
   for(final job in jobs)
@@ -21,20 +18,15 @@ List<Map<String, int>> dms(List<Map<String, int>> x){
 
   for(var i = 0; i < lcm; i++)
     {
-      print('i = $i a lcm = $lcm');
-        {
-          for(final job in jobs)
-            {
-              if((i%job['T']! ==0))
-                {
-                  job['status'] = 1;
-                }
-            }
-        }
+      for(final job in jobs)
+      {
+        if((i%job['T']! ==0)) //Wlaczenie zadania na aktywne
+          job['status'] = 1;
+      }
       bool bPauza = true;
       for(final job in jobs)
         {
-          if(job['status']==1)
+          if(job['status'] == 1 && job['p'] != 0) //Wybranie zadania z posortowanej list jobs ktore ma status aktywny
             {
               kolejnosc.add({
                 'id': job['id']!,
@@ -51,7 +43,7 @@ List<Map<String, int>> dms(List<Map<String, int>> x){
               break;
             }
         }
-      if(bPauza)
+      if(bPauza) //Czy nie istnieje w tym momecie zadanie do wykonania
         {
           kolejnosc.add({
             'id': -1,
@@ -63,18 +55,4 @@ List<Map<String, int>> dms(List<Map<String, int>> x){
     }
 
   return kolejnosc;
-}
-
-int getLcm(List<Map<String, int>> jobs){
-  List<int> deadlines = [];
-  for(final job in jobs)
-    {
-      deadlines.add(job['d']!);
-    }
-  int lcm = 1;
-  for(final d in deadlines)
-    {
-      lcm = lcm*d;
-    }
-  return lcm;
 }
