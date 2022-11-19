@@ -76,8 +76,8 @@ class _MainScreenState extends State<MainScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _PropertiesInputs(),
-          _JobsInfoTable(),
+          Expanded(child: _PropertiesInputs()),
+          Expanded(child: _JobsInfoTable()),
           if(calculated ) _JobsTimeTable(),
         ],
       ),
@@ -109,7 +109,7 @@ class _MainScreenState extends State<MainScreen> {
                           TableCell(
                             child: Container(
                               alignment: Alignment.center,
-                              child: Text(scheduledJobs[i]['id'].toString()),
+                              child: (scheduledJobs[i]['id']!=-1) ? Text(scheduledJobs[i]['id'].toString()) : Text("P", style: TextStyle(color: Colors.red)),
                               color: i % 2 == 0 ? Colors.grey.shade200 : Colors.grey.shade400,
                             ),
                           ),
@@ -232,6 +232,7 @@ class _MainScreenState extends State<MainScreen> {
   Row _PropertiesInputs() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text("Liczba zadań: "),
         SizedBox(
@@ -253,6 +254,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               children: [

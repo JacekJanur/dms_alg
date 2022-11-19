@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 // Coś jest nie tak z tymi pętlami tamm...
 
-List<Map<String, int>> dms(List<Map<String, int>> jobs){
+List<Map<String, int>> dms(List<Map<String, int>> x){
+  List<Map<String, int>> jobs = x;
   List<Map<String, int>> kolejnosc = [];
   int lcm = getLcm(jobs);
   bool go = true;
