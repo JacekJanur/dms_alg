@@ -78,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           Expanded(child: _PropertiesInputs()),
           Expanded(child: _JobsInfoTable()),
-          if(calculated ) _JobsTimeTable(),
+          if(calculated) _JobsTimeTable(),
         ],
       ),
     );
@@ -309,11 +309,13 @@ class _MainScreenState extends State<MainScreen> {
               });
             },
             child: Text("Losuj zadnia")),
+
         OutlinedButton(onPressed: () {
+          dynamic test = jobs;
+          test = dms(test);
           setState(() {
             calculated = true;
-            dynamic test = jobs;
-            scheduledJobs = dms(test);
+            scheduledJobs = test;
           });
         }, child: Text("Start"))
       ],
