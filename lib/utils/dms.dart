@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 // Coś jest nie tak z tymi pętlami tamm...
 
 List<Map<String, int>> dms(List<Map<String, int>> x){
-  List<Map<String, int>> jobs = x;
+  List<Map<String, int>> jobs = x.toList();
   List<Map<String, int>> kolejnosc = [];
   int lcm = getLcm(jobs);
-  bool go = true;
 
   List<int> listP = [];
   for(final job in jobs)
@@ -23,7 +22,6 @@ List<Map<String, int>> dms(List<Map<String, int>> x){
   for(var i = 0; i < lcm; i++)
     {
       print('i = $i a lcm = $lcm');
-      //if(i>0)
         {
           for(final job in jobs)
             {
@@ -44,10 +42,10 @@ List<Map<String, int>> dms(List<Map<String, int>> x){
                 'end': 1,
                 'T': 0,
               });
-              job['p'] =job['p']! - 1;
-              if(job['p']! == 0) {
+              listP[job['id']!] = listP[job['id']!] - 1;
+              if(listP[job['id']!] == 0) {
                 job['status'] = 0;
-                job['p'] = listP[job['id']!];
+                listP[job['id']!] = job['p']!;
               }
               bPauza = false;
               break;
@@ -68,6 +66,8 @@ List<Map<String, int>> dms(List<Map<String, int>> x){
 }
 
 int getLcm(List<Map<String, int>> jobs){
+  return 100;
+
   List<int> deadlines = [];
   for(final job in jobs)
     {
