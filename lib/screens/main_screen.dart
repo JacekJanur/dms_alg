@@ -1,9 +1,12 @@
 import 'dart:ffi';
 import 'dart:math';
+import 'package:dms_alg/utils/check_initial_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../utils/dms.dart';
+import '../utils/get_jobs.dart';
+import '../utils/variables.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key? key}) : super(key: key);
@@ -17,58 +20,11 @@ class _MainScreenState extends State<MainScreen> {
   int maxTime = 10;
   int minTime = 0;
   bool calculated = false;
-  List<MaterialColor> colorsList = [Colors.blue, Colors.orange, Colors.green, Colors.purple, Colors.cyan, Colors.teal, Colors.blueGrey, Colors.lightGreen, Colors.brown];
-  List<int> indexesTime = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20
-  ];
+
 
   List<Map<String, dynamic>> scheduledJobs = [];
 
-  List<Map<String, int>> jobs = [
-    {
-      'id': 0,
-      'p': 1,
-      'd': 1,
-      'T': 2,
-    },
-    {
-      'id': 1,
-      'p': 1,
-      'd': 3,
-      'T': 4,
-    },
-    {
-      'id': 2,
-      'p': 2,
-      'd': 8,
-      'T': 10,
-    },
-    {
-      'id': 3,
-      'p': 1,
-      'd': 10,
-      'T': 10,
-    }
-  ];
+  List<Map<String, int>> jobs = PublicVariables().jobsStarter;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +36,7 @@ class _MainScreenState extends State<MainScreen> {
           Expanded(child: _PropertiesInputs()),
           Expanded(child: _JobsInfoTable()),
           if(calculated) _JobsTimeTable(),
+          if(calculated) Text('LCM: ${getLcm(jobs)}'),
         ],
       ),
     );
@@ -111,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
                             child: Container(
                               alignment: Alignment.center,
                               child: (scheduledJobs[i]['id']!=-1) ? Text(scheduledJobs[i]['id'].toString()) : Text("P", style: TextStyle(color: Colors.red)),
-                              color: (scheduledJobs[i]['id']!=-1) ? colorsList[scheduledJobs[i]['id']] : Colors.white,
+                              color: (scheduledJobs[i]['id']!=-1) ? PublicVariables().colorsList[scheduledJobs[i]['id']] : Colors.white,
                             ),
                           ),
                       ],
@@ -140,7 +97,7 @@ class _MainScreenState extends State<MainScreen> {
             Column(children: [Text('')]),
             for (int i = 1; i <= jobsNumber; i++) ...[
               Container(
-                  color: colorsList[i-1],
+                  color: PublicVariables().colorsList[i-1],
                   child: Column(children: [Text('Z ${i-1}')])),
             ]
           ],
@@ -316,37 +273,23 @@ class _MainScreenState extends State<MainScreen> {
         OutlinedButton(onPressed: () {
           dynamic test = jobs;
           test = dms(test);
-          setState(() {
-            calculated = true;
-            scheduledJobs = test;
-          });
+          if(checkInitialValues(jobs))
+            {
+              setState(() {
+                calculated = true;
+                scheduledJobs = test;
+              });
+            }
+          else{
+            showDialog(context: context, builder:
+            (context) => AlertDialog(content: Text("Złe wartości zadań")),);
+          }
         }, child: Text("Start"))
       ],
     );
   }
 }
 
-List<Map<String, int>> getJobs(n, max, min) {
-  List<Map<String, int>> jobs = [];
-  Random random = new Random();
-  int p = 0;
-  int d = 0;
-  int T = 0;
 
-  for (int i = 0; i < n; i++) {
-    p = (random.nextInt(max + 1 - min) + min).toInt();
-    d = p + random.nextInt(max + 5);
-    T = (random.nextInt(10) + d).toInt();
-
-    jobs.add({
-      'id': i,
-      'p': p,
-      'd': d,
-      'T': T,
-    });
-  }
-
-  return jobs;
-}
 
 

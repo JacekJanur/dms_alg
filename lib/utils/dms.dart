@@ -56,3 +56,16 @@ List<Map<String, int>> dms(List<Map<String, int>> x){
 
   return kolejnosc;
 }
+
+
+int getLcm(List<Map<String, int>> jobs) {
+  List<int> deadlines = [];
+  for (final job in jobs) {
+    deadlines.add(job['d']!);
+  }
+  int lcm = 1;
+  for (final d in deadlines) {
+    lcm = lcm * d;
+  }
+  return lcm;
+}
