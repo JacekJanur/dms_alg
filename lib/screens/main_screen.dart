@@ -36,7 +36,7 @@ class _MainScreenState extends State<MainScreen> {
           Expanded(child: _PropertiesInputs()),
           Expanded(child: _JobsInfoTable()),
           if(calculated) _JobsTimeTable(),
-          if(calculated) Text('LCM: ${getLcm(jobs)}'),
+          if(calculated) Text('LCM: ${DMS().getLcm(jobs)}'),
         ],
       ),
     );
@@ -272,7 +272,7 @@ class _MainScreenState extends State<MainScreen> {
 
         OutlinedButton(onPressed: () {
           dynamic test = jobs;
-          test = dms(test);
+          test = DMS().calculateDMS(test);
           if(checkInitialValues(jobs))
             {
               setState(() {
