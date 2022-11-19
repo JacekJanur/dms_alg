@@ -66,8 +66,6 @@ List<Map<String, int>> dms(List<Map<String, int>> x){
 }
 
 int getLcm(List<Map<String, int>> jobs){
-  return 100;
-
   List<int> deadlines = [];
   for(final job in jobs)
     {

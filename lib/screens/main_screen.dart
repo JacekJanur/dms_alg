@@ -17,6 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   int maxTime = 10;
   int minTime = 0;
   bool calculated = false;
+  List<MaterialColor> colorsList = [Colors.blue, Colors.orange, Colors.green, Colors.purple, Colors.cyan, Colors.teal, Colors.blueGrey, Colors.lightGreen, Colors.brown];
   List<int> indexesTime = [
     1,
     2,
@@ -110,7 +111,7 @@ class _MainScreenState extends State<MainScreen> {
                             child: Container(
                               alignment: Alignment.center,
                               child: (scheduledJobs[i]['id']!=-1) ? Text(scheduledJobs[i]['id'].toString()) : Text("P", style: TextStyle(color: Colors.red)),
-                              color: i % 2 == 0 ? Colors.grey.shade200 : Colors.grey.shade400,
+                              color: (scheduledJobs[i]['id']!=-1) ? colorsList[scheduledJobs[i]['id']] : Colors.white,
                             ),
                           ),
                       ],
@@ -138,7 +139,9 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Column(children: [Text('')]),
             for (int i = 1; i <= jobsNumber; i++) ...[
-              Column(children: [Text('Z ${i}')]),
+              Container(
+                  color: colorsList[i],
+                  child: Column(children: [Text('Z ${i}')])),
             ]
           ],
         ),
