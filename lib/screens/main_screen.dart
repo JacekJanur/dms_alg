@@ -13,7 +13,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int jobsNumber = 3;
+  int jobsNumber = 4;
   int maxTime = 10;
   int minTime = 0;
   List<int> indexesTime = [
@@ -42,28 +42,28 @@ class _MainScreenState extends State<MainScreen> {
   List<Map<String, int>> jobs = [
     {
       'id': 0,
-      'p': 0,
-      'd': 0,
-      'T': 0,
+      'p': 1,
+      'd': 1,
+      'T': 2,
     },
     {
       'id': 1,
-      'p': 0,
-      'd': 0,
-      'T': 0,
+      'p': 1,
+      'd': 3,
+      'T': 4,
     },
     {
       'id': 2,
-      'p': 0,
-      'd': 0,
-      'T': 0,
+      'p': 2,
+      'd': 8,
+      'T': 10,
     },
     {
       'id': 3,
-      'p': 0,
-      'd': 0,
-      'T': 0,
-    },
+      'p': 1,
+      'd': 10,
+      'T': 10,
+    }
   ];
 
   @override
