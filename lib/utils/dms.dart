@@ -14,8 +14,6 @@ List<Map<String, int>> dms(List<Map<String, int>> jobs){
     listP.add(a);
   }
 
-
-
   jobs.sort((a, b) {
     return a['d']!.compareTo(b['d']!);
   },); //sortujemy wedlug deadline'u
@@ -34,7 +32,7 @@ List<Map<String, int>> dms(List<Map<String, int>> jobs){
                 }
             }
         }
-
+      bool bPauza = true;
       for(final job in jobs)
         {
           if(job['status']==1)
@@ -50,8 +48,18 @@ List<Map<String, int>> dms(List<Map<String, int>> jobs){
                 job['status'] = 0;
                 job['p'] = listP[job['id']!];
               }
+              bPauza = false;
               break;
             }
+        }
+      if(bPauza)
+        {
+          kolejnosc.add({
+            'id': -1,
+            'start': i,
+            'end': 1,
+            'T': 0,
+          });
         }
     }
 
